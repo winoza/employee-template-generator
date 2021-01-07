@@ -12,6 +12,62 @@ const render = require("./lib/htmlRenderer");
 
 
 // Write code to use inquirer to gather information about the development team members,
+function employeeManager() {
+    console.log("Please build your team");
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "managerName",
+            message: "Please enter your manager's name.",
+            validate: function (answer) {
+              if (answer !== "") {
+                return true;
+              }
+                return "Please enter at least one character.";
+            }
+          },
+        {
+            type: "input",
+            name: "managerId",
+            message: "Please enter your manager's id.",
+            validate: function (answer) {
+              if (!isNaN(answer) && answer > 0) {
+                return true;
+              }
+                return "Please enter a valid number greater than zero.";
+            }
+        },
+        {
+            type: "input",
+            name: "managerEmail",
+            message: "Please enter your manager's email.",
+            validate: function (answer) {
+              if (answer.indexOf("@") >= 0) {
+                return true;
+              }
+                return "Please enter a valid email address.";
+            }
+        },
+        {
+            type: "input",
+            name: "managerOfficenumber",
+            message: "Please enter your manager's office number.",
+            validate: function (answer) {
+              if (!isNaN(answer) && answer > 0) {
+                return true;
+              }
+                return "Please enter a valid office number greater than zero.";
+            }
+        }
+    ]).then(answers => {
+        const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficenumber);
+        console.log(JSON.stringify(manager))
+    })
+}
+
+employeeManager();
+
+
 // and to create objects for each team member (using the correct classes as blueprints!)
 
 // After the user has input all employees desired, call the `render` function (required
